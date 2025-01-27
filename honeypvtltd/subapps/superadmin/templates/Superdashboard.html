@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>superadmin</title>
+</head>
+<body>
+    <style>
+        #mgr-form{
+            position: relative;
+            left: -100%;
+        }
+        #mdata{
+            position: relative;
+            left: -200%;
+        }
+    </style>
+    <h1>This is superadmin dashboard</h1>
+    <button onclick="window.locationhref='{% url "super" %}?btn=logout'">Edit</button>
+
+    <nav>
+        <button onclick="window.location.href='{% url "super" %}?btn=addmanager'">Add Manager</button>
+        <button onclick="manager_data()">Show Manager Details</button>
+        <a href="">emloyees</a>
+        <a href="">HR</a>
+        <a href="">sales</a>
+        <a href="">client</a>
+        <a href="">Store</a>
+    </nav>
+    {% comment %} <form action="" method="POST" id="mgr-form">
+        <input type="text" name="nm" placeholder="name"> <br>
+        <input type="text" name="em" placeholder="email"> <br>
+        <input type="text" name="pwd" placeholder="password"> <br>
+        birth<input type="date" name="bt"><br>
+        joining<input type="date" name="jd"> <br>
+        <input type="submit" value="add manager">
+
+    </form> {% endcomment %}
+    {% if data %}
+    <div id="mdata">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>ID DEFAULT</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>DOB</th>
+                <th>DOJ</th>
+                <th>EMP ID</th>
+                <th>Action</th>
+            </tr>
+            {% for i in data %}
+            <tr>
+               <td>{{i.name}}</td>
+               <td>{{i.id}}</td>
+               <td>{{i.email}}</td>
+               <td>{{i.password}}</td>
+               <td>{{i.birth_date}}</td>
+               <td>{{i.joining_date}}</td>
+               <td>{{i.emp_id}}</td>
+               <td><button onclick="window.location.href='{% url "super" %}?btn=edit&id={{i.id}}'">Edit</button></td>
+               <td><button onclick="confirmDelete({{i.id}})">Delete</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <h1>No data exists</h1>
+    {% endif %}
+
+    <script>
+        const manager=()=>{
+            let btn=document.getElementById("mgr-form")
+            btn.style.left="0%"
+        }
+        const manager_data=()=>{
+            let btn=document.getElementById("mdata");
+            btn.style.left="0%";
+        }
+
+        function confirmDelete(managerId) {
+            const confirmation=confirm("Are you sure want to delete")
+            if (confirmation){
+                window.location.href="{% url 'super' %}?btn=delete&id="+managerId;
+            }
+        }
+    </script>
+    
+</body>
+</html>
