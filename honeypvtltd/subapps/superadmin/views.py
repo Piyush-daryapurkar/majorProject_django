@@ -73,3 +73,4 @@ def Super_dashboard(req):
 def Manager_login(req):
     return HttpResponse("hii manager")
 
+
